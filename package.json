@@ -4,24 +4,54 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint src scripts prisma",
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:reset": "prisma db push --force-reset && tsx prisma/seed.ts",
+    "typecheck": "tsc --noEmit",
+    "db:init": "tsx prisma/init-prod.ts",
+    "feature": "tsx scripts/feature.ts",
+    "test:smoke": "tsx scripts/smoke.ts",
+    "test:actions": "node --conditions react-server --import tsx scripts/action-tests.ts",
+    "test:schema": "tsx scripts/schema-check.ts",
+    "test:ui": "tsx scripts/ui-tests.ts",
+    "test:all": "npm run typecheck && npm run lint && npm run test:schema && npm run test:actions",
+    "db:migrate": "prisma migrate deploy"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
+    "jose": "^6.2.12",
+    "lucide-react": "^1.47.0",
+    "next": "15.5.25",
+    "prisma": "^6.19.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.25"
+    "recharts": "^3.10.1",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
+    "dotenv": "^18.0.1",
     "eslint": "^9",
     "eslint-config-next": "15.5.25",
-    "@eslint/eslintrc": "^3"
+    "pdf-lib": "^1.17.1",
+    "playwright-core": "^1.63.0",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.15",
+    "typescript": "^5"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }
