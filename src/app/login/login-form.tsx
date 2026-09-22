@@ -6,9 +6,9 @@ import { loginAction } from "@/actions/auth";
 import { Feedback } from "@/components/form";
 
 const ROLES = [
-  { key: "ADMIN", label: "Admin", icon: ShieldCheck, email: "admin@swanschool.in", color: "#e11d48" },
-  { key: "TEACHER", label: "Teacher", icon: UserRound, email: "teacher1@swanschool.in", color: "#059669" },
-  { key: "STUDENT", label: "Student", icon: GraduationCap, email: "student1@swanschool.in", color: "#7c3aed" },
+  { key: "ADMIN", label: "Admin", icon: ShieldCheck, email: "admin@jspublicschool.edu", color: "#0284c7" },
+  { key: "TEACHER", label: "Teacher", icon: UserRound, email: "teacher1@jspublicschool.edu", color: "#059669" },
+  { key: "STUDENT", label: "Student", icon: GraduationCap, email: "student1@jspublicschool.edu", color: "#7c3aed" },
   { key: "PARENT", label: "Parent", icon: HeartHandshake, email: "", color: "#f97316" },
 ] as const;
 

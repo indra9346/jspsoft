@@ -39,6 +39,7 @@ export function AppShell({ groups, school, user, children }: Props) {
                 <Link
                   key={it.href}
                   href={it.href}
+                  prefetch={true}
                   onClick={() => setOpen(false)}
                   className={`nav-link ${active ? "active" : ""}`}
                 >

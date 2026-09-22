@@ -27,14 +27,19 @@ export async function destroySession() {
 
 /** Current signed-in user (with role profile), or null. The user must belong to the school in the token. */
 export const getUser = cache(async () => {
-  const s = await readSession();
-  if (!s) return null;
-  const user = await rawDb.user.findUnique({
-    where: { id: s.uid },
-    include: { staff: true, student: { include: { classRoom: true } } },
-  });
-  if (!user || !user.active || user.schoolId !== s.sid) return null;
-  return user;
+  try {
+    const s = await readSession();
+    if (!s) return null;
+    const user = await rawDb.user.findUnique({
+      where: { id: s.uid },
+      include: { staff: true, student: { include: { classRoom: true } } },
+    });
+    if (!user || !user.active || user.schoolId !== s.sid) return null;
+    return user;
+  } catch (err) {
+    console.error("getUser lookup error:", err);
+    return null;
+  }
 });
 
 export type SessionUser = NonNullable<Awaited<ReturnType<typeof getUser>>>;

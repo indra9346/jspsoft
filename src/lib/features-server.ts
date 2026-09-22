@@ -5,8 +5,12 @@ import { isDefaultFeature, LOCKED, type FeatureKey, type LockedFeature } from "@
 
 /** Add-ons unlocked for the current school (school_features table). */
 export const getUnlockedAddons = cache(async (): Promise<Set<string>> => {
-  const rows = await db.schoolFeature.findMany({ where: { enabled: true } });
-  return new Set(rows.map((r) => r.featureKey));
+  try {
+    const rows = await db.schoolFeature.findMany({ where: { enabled: true } });
+    return new Set(rows.map((r) => r.featureKey));
+  } catch {
+    return new Set();
+  }
 });
 
 export async function isFeatureEnabled(key: FeatureKey): Promise<boolean> {

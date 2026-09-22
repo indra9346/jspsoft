@@ -46,14 +46,13 @@ async function main() {
   const TT = await import("../src/actions/timetable");
   const RM = await import("../src/actions/remarks");
   const FS = await import("../src/lib/features-server");
-  const { visibleClasses, canViewStudent, teacherClassIds, announcementWhere } = await import("../src/lib/access");
+  const { visibleClasses, canViewStudent, announcementWhere } = await import("../src/lib/access");
   const { getUser } = await import("../src/lib/auth");
 
   // Load School C: J S Public Pre Primary School
   const jsSchool = await raw.school.findUniqueOrThrow({ where: { slug: "js-public-school" } });
   const jsAdmin = await raw.user.findUniqueOrThrow({ where: { email: "admin@jspublicschool.edu" } });
   const teacherAUser = await raw.user.findUniqueOrThrow({ where: { email: "teacher1@jspublicschool.edu" }, include: { staff: true } });
-  const teacherBUser = await raw.user.findUniqueOrThrow({ where: { email: "teacher2@jspublicschool.edu" }, include: { staff: true } });
 
   const montA = await raw.classRoom.findFirstOrThrow({ where: { schoolId: jsSchool.id, grade: "Montessori", section: "A" } });
   const montB = await raw.classRoom.findFirstOrThrow({ where: { schoolId: jsSchool.id, grade: "Montessori", section: "B" } });
@@ -77,7 +76,6 @@ async function main() {
   const teacherAClassIds = teacherAClasses.map((c) => c.id);
   check(teacherAClassIds.includes(montA.id) && !teacherAClassIds.includes(montB.id), "Step 2 & 3: Teacher A sees Montessori-A and NOT Montessori-B");
   const teacherAStudents = await raw.student.findMany({ where: { classId: { in: teacherAClassIds } } });
-  const studentIdsInMontA = new Set(montAStudents.map((s: { id: string }) => s.id));
   const onlyMontAStudents = teacherAStudents.filter((s: { classId: string }) => s.classId === montA.id);
   const montBStudentsVisible = teacherAStudents.filter((s: { classId: string }) => s.classId === montB.id);
   check(onlyMontAStudents.length === montAStudents.length && montBStudentsVisible.length === 0, `Step 3: Only assigned section's students appear (${onlyMontAStudents.length} in Montessori-A, 0 in Montessori-B)`);

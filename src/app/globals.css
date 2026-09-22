@@ -202,9 +202,10 @@ h1, h2, h3, h4 {
   font-size: 0.86rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.86);
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.12s ease, color 0.12s ease, transform 0.08s ease;
 }
 .nav-link:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
+.nav-link:active { transform: scale(0.98); }
 .nav-link.active {
   background: #fff;
   color: var(--brand);

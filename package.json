@@ -19,7 +19,8 @@
     "test:schema": "tsx scripts/schema-check.ts",
     "test:ui": "tsx scripts/ui-tests.ts",
     "test:all": "npm run typecheck && npm run lint && npm run test:schema && npm run test:actions",
-    "db:migrate": "prisma migrate deploy"
+    "db:migrate": "prisma migrate deploy",
+    "db:deploy:aws": "tsx scripts/deploy-aws-db.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
