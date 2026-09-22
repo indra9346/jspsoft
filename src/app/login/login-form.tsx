@@ -8,7 +8,6 @@ import { Feedback } from "@/components/form";
 const ROLES = [
   { key: "ADMIN", label: "Admin", icon: ShieldCheck, email: "admin@jspublicschool.edu", color: "#0284c7" },
   { key: "TEACHER", label: "Teacher", icon: UserRound, email: "teacher1@jspublicschool.edu", color: "#059669" },
-  { key: "STUDENT", label: "Student", icon: GraduationCap, email: "student1@jspublicschool.edu", color: "#7c3aed" },
   { key: "PARENT", label: "Parent", icon: HeartHandshake, email: "", color: "#f97316" },
 ] as const;
 
@@ -30,7 +29,7 @@ export function LoginForm({ website, showDemo }: { website: string; showDemo: bo
 
   return (
     <div>
-      <div className="mb-5 grid grid-cols-4 gap-2">
+      <div className="mb-5 grid grid-cols-3 gap-2">
         {ROLES.map((r) => {
           const Icon = r.icon;
           const on = r.key === role;

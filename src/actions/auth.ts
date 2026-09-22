@@ -14,7 +14,9 @@ export async function loginAction(_: ActionState, fd: FormData): Promise<ActionS
   const user = await rawDb.user.findUnique({ where: { email } });
   const valid = user && (await bcrypt.compare(password, user.passwordHash));
   if (!user || !valid) return fail("Incorrect email or password.");
-  if (!user.active) return fail("This account has been deactivated. Contact your school admin.");
+  if (user.role === "STUDENT") {
+    return fail("Student portal login is disabled. Pre-primary and primary student records are managed by Class Teachers and Administration.");
+  }
   if (user.role === "PARENT") {
     return fail("Parent Portal is not active under your current plan. Contact Swan Digital Solutions to unlock it.");
   }

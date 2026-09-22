@@ -203,7 +203,21 @@ async function main() {
   check(!!ttRes?.ok, "Step 11: Admin created/updated timetable slot", ttRes?.message);
 
   // 12 & 13. Review staff leave -> Approve/reject leave
-  const pendingLeave = await raw.leaveRequest.findFirst({ where: { schoolId: jsSchool.id, status: "PENDING" } });
+  let pendingLeave = await raw.leaveRequest.findFirst({ where: { schoolId: jsSchool.id, status: "PENDING" } });
+  if (!pendingLeave) {
+    pendingLeave = await raw.leaveRequest.create({
+      data: {
+        schoolId: jsSchool.id,
+        staffId: teacherAUser.staff!.id,
+        type: "CASUAL",
+        fromDate: new Date("2026-10-10"),
+        toDate: new Date("2026-10-10"),
+        days: 1,
+        reason: "Personal appointment",
+        status: "PENDING",
+      },
+    });
+  }
   check(!!pendingLeave, "Step 12: Admin fetched pending staff leave request");
   if (pendingLeave) {
     const lvRes = await LV.reviewLeaveAction(pendingLeave.id, "APPROVED", null, fd({ remark: "Approved for family wedding" }));
