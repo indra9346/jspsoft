@@ -18,7 +18,7 @@ import { DemoBadge, MapIllustration, NonTeachingPreview, ParentPreview } from "@
 export async function LockedFeature({ feature, variant }: { feature: LockedFeature; variant?: string }) {
   const user = await requireUser();
   const m = LOCKED[feature];
-  if (!(m.roles as string[]).includes(user.role)) redirect("/dashboard");
+  if (!["ADMIN", "TEACHER"].includes(user.role)) redirect("/dashboard");
   const v = variant ? m.variants?.[variant] : undefined;
   const page = v ? { title: v.title, icon: v.icon ?? m.icon, summary: v.summary, bullets: v.bullets, preview: v.preview, kind: v.kind } : { title: m.title, icon: m.icon, summary: m.summary, bullets: m.bullets, preview: m.preview, kind: m.kind };
   const Icon = ICONS[page.icon] ?? ICONS.lock;

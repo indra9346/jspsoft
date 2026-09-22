@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { GraduationCap, Lock, LogIn, ShieldCheck, UserRound, HeartHandshake, ExternalLink, Loader2 } from "lucide-react";
+import { Lock, LogIn, ShieldCheck, UserRound, HeartHandshake, ExternalLink, Loader2 } from "lucide-react";
 import { loginAction } from "@/actions/auth";
 import { Feedback } from "@/components/form";
 
